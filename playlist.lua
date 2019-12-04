@@ -29,6 +29,7 @@ os.execute("sleep " .. start_time)
 --local resp_codes_file = io.open(item_dir..'/'..warc_file_base..'_data.txt', 'w')
 
 -----------------------------------------------------------------------------------------------------------------------
+-- example thumbnail <img aria-hidden="true" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" src="/yts/img/pixel-vfl3z5WfW.gif" data-ytimg="1" alt="" data-thumb="https://i.ytimg.com/vi/2hgcoa9xYD8/hqdefault.jpg?sqp=-oaymwEiCKgBEF5IWvKriqkDFQgBFQAAAAAYASUAAMhCPQCAokN4AQ==&amp;rs=AOn4CLBdapDZ_zykaBIU2t1zge7aedpuyg" width="72" >
 
 wget.callbacks.get_urls = function(file, url, is_css, iri)
   local urls = {}
@@ -44,6 +45,12 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       end
       found = true
     end
+
+    if string.find(line, '%<img .* data%-thumb%=') then
+        io.stdout:write("Thumb line:" .. line .. "\n")
+        io.stdout:flush()
+    end
+
   end
   if not found then
       io.stdout:write("\tNext Not Found\n")
